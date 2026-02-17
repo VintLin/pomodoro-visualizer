@@ -257,7 +257,8 @@ def cmd_today(args):
     
     # Get daily goal
     cursor.execute("SELECT value FROM config WHERE key = 'daily_goal'")
-    daily_goal = int(cursor.fetchone()[0]) if cursor.fetchone() else 8
+    goal_result = cursor.fetchone()
+    daily_goal = int(goal_result[0]) if goal_result else 8
     
     conn.close()
     
@@ -302,7 +303,8 @@ def cmd_week(args):
     
     # Get daily goal
     cursor.execute("SELECT value FROM config WHERE key = 'daily_goal'")
-    daily_goal = int(cursor.fetchone()[0]) if cursor.fetchone() else 8
+    goal_result = cursor.fetchone()
+    daily_goal = int(goal_result[0]) if goal_result else 8
     
     conn.close()
     
@@ -359,7 +361,8 @@ def cmd_heatmap(args):
     
     # Get daily goal
     cursor.execute("SELECT value FROM config WHERE key = 'daily_goal'")
-    daily_goal = int(cursor.fetchone()[0]) if cursor.fetchone() else 8
+    goal_result = cursor.fetchone()
+    daily_goal = int(goal_result[0]) if goal_result else 8
     
     conn.close()
     
@@ -435,7 +438,8 @@ def cmd_heatmap(args):
     print(f"📊 Month Summary:")
     print(f"  Total: {total_pomodoros} 🍅 ({total_minutes} min)")
     print(f"  Active days: {active_days}/{last_day.day}")
-    print(f"  Daily avg: {total_minutes / active_days:.0f} min (on active days)")
+    if active_days > 0:
+        print(f"  Daily avg: {total_minutes / active_days:.0f} min (on active days)")
 
 
 def cmd_task(args):
